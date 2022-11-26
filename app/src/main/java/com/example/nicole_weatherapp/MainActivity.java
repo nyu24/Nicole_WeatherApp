@@ -3,6 +3,8 @@ package com.example.nicole_weatherapp;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -16,8 +18,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
-//declare the request queue + afficher in , request queue add json request
-    //put in logcat + temp feel like, temp max/min, pression, humidity (all in logcat)
+    //les champs
+    TextView mDate, mVille, mTemp, mDescription;
+    ImageView imgIcon;
+    String maVille = "Toronto";
+
     private RequestQueue requestQueue;
 
     @Override
@@ -25,21 +30,31 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mDate = findViewById(R.id.mDate);
+        mVille = findViewById(R.id.mVille);
+        mTemp = findViewById(R.id.mTemp);
+        mDescription = findViewById(R.id.mDescription);
+
+        requestQueue = Volley.newRequestQueue(this);
         afficher();
 
     }
 
     public void afficher(){
         String url = "http://api.openweathermap.org/data/2.5/weather?q=Toronto&appid=3ddc142c3a3b1aed34e0a885a5af9119&units=metric";
-        requestQueue = Volley.newRequestQueue(this);
+
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
-                    //affichier les donnes dans le logcat
+                    //afficher dans le logcat
                     JSONObject main_object = response.getJSONObject("main");
                     JSONArray array = response.getJSONArray("weather");
+                    //afficher weather
                     Log.d("Tag", "resultat =" + array.toString());
+                    //afficher main : temperature (feels like, min, max), pression, humidite.
+                    Log.d("Tag", "resultat =" + main_object);
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
