@@ -7,4 +7,6 @@
     <string name="temperature">Temperature</string>
     <string name="degree">O</string>
     <string name="desc">Description</string>
+    <string name="WindSpeed">Vitesse du vent :</string>
+    <string name="vent">Vent</string>
 </resources>
